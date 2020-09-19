@@ -8,17 +8,19 @@ import OtherPage from "./OtherPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Link to="/">Home</Link>
-        <Link to="/other-page">Other Page</Link>
-      </header>
-      <div>
-        <Route exact path="/" component={Fib} />
-        <Route exact path="/other-page" component={OtherPage} />
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <Link to="/">Home</Link>
+          <Link to="/other-page">Other Page</Link>
+        </header>
+        <div>
+          <Route exact path="/" component={Fib} />
+          <Route exact path="/other-page" component={OtherPage} />
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
