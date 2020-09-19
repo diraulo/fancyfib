@@ -28,3 +28,21 @@ after-success:
   - docker push diraulo/fancyfib-nginx
   - docker push diraulo/fancyfib-server
   - docker push diraulo/fancyfib-worker
+
+deploy:
+  provider: elasticbeanstalk
+
+  # Elastic Beanstalk configs
+  region: "af-south-1"
+  app: "fancyfib"
+  env: "Fancyfib-env"
+  bucket_name: "elasticbeanstalk-af-south-1-186522626504"
+  bucket_path: "fancyfib"
+
+  # Only deploy on push to master
+  on:
+    branch: master
+
+  # AWS Secrets
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
