@@ -25,7 +25,7 @@ pgClient.on("connect", () => {
   pgClient
     .query("CREATE TABLE IF NOT EXISTS values (number INT)")
     .catch((err) => console.log(err));
-})
+});
 
 // Redis client setup
 const redis = require("redis");
@@ -63,7 +63,7 @@ app.post("/values", async (req, res) => {
   redisClient.hset("values", index, "Nothing yet");
   redisPublisher.publish("insert", index);
 
-  pgClient.query("INSERT INTO values(number) VALUES($1", [index]);
+  pgClient.query("INSERT INTO values(number) VALUES($1)", [index]);
   res.send({ working: true });
 });
 
