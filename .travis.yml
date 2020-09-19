@@ -1,0 +1,30 @@
+sudo: required
+
+language: generic
+
+notifications:
+  email: false
+
+services:
+  - docker
+
+before-install:
+  - docker build -t diraulo/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true diraulo/react-test yarn test -- --coverage
+
+after-success:
+  - docker build -t diraulo/fancyfib-client ./client
+  - docker build -t diraulo/fancyfib-nginx ./nginx
+  - docker build -t diraulo/fancyfib-server ./server
+  - docker build -t diraulo/fancyfib-worker ./worker
+
+  # Log into Dockerhub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  # Push images to docker hub
+  - docker push diraulo/fancyfib-client
+  - docker push diraulo/fancyfib-nginx
+  - docker push diraulo/fancyfib-server
+  - docker push diraulo/fancyfib-worker
